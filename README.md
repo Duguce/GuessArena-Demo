@@ -43,13 +43,7 @@
 
 ## Usage
 
-1. Set up your API keys in `config/models.ini` for the AI models you want to use. Example:
-   ```ini
-   [gpt-4o]
-   model = gpt-4o
-   base_url = http://your.api.endpoint/v1
-   api_key = your_api_key_here
-   ```
+1. Set up your API keys in `config/models.ini` for the AI models you want to use.
 
 2. Start the application:
    ```
