@@ -1,0 +1,25 @@
+# Protect sensitive directories from direct web access
+
+# Deny access to configuration directories
+<DirectoryMatch "^/config/">
+    Order deny,allow
+    Deny from all
+</DirectoryMatch>
+
+# Protect data directory
+<DirectoryMatch "^/data/">
+    Order deny,allow
+    Deny from all
+</DirectoryMatch>
+
+# Protect all .ini and .json files directly
+<FilesMatch "\.(ini|json)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Protect log files
+<FilesMatch "\.(log)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow">
+  <title>GuessArena - AI Simulation</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Simulation page styling, reusing global styles */
+    .model-selector, .card-set-selector, .card-options-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 18px;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .model-selector > div, .option-group {
+      min-width: 180px;
+      flex: 1;
+    }
+
+    .model-selector label, .option-group label, .custom-options label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+      color: #495057;
+      font-size: 0.95rem;
+    }
+
+    .model-selector select, .option-group select {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      background-color: white;
+      font-size: 0.95rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .model-selector select:focus, .option-group select:focus, 
+    .custom-options textarea:focus, .custom-options input:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+      outline: none;
+    }
+
+    .card-set-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 15px;
+    }
+
+    .card-set-selector h3, .card-options-container h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: #495057;
+      flex: 1;
+    }
+
+    .card-set-selector .radio-container {
+      margin-right: 15px;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .card-set-selector .radio-label {
+      margin-left: 5px;
+      font-size: 0.95rem;
+    }
+    
+    .card-options-container > div {
+      display: flex;
+      gap: 15px;
+      flex: 2;
+    }
+
+    .custom-options {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 18px;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .custom-options textarea,
+    .custom-options input {
+      width: 100%;
+      padding: 12px;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      transition: all 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      color: #495057;
+      background-color: white;
+      max-width: 100%;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    
+    .custom-options textarea {
+      min-height: 80px;
+    }
+
+    .custom-options .help-text {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    /* Add confirm button styling to match player arena */
+    .confirm-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.2s ease;
+      align-self: flex-end;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .confirm-button:hover {
+      background-color: #45a049;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .confirm-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Selection color for better UX */
+    ::selection {
+      background-color: var(--primary-light);
+      color: white;
+    }
+
+    .controls-container {
+      display: flex;
+      justify-content: center;
+      margin: 25px 0;
+    }
+
+    #start-sim-btn {
+      padding: 14px 32px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      min-width: 220px;
+      font-size: 1.05rem;
+      transition: all 0.2s ease;
+      letter-spacing: 0.5px;
+    }
+
+    #start-sim-btn:hover {
+      background-color: #45a049;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    #start-sim-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #start-sim-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3), 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .game-dialogue {
+      flex-grow: 1;
+      overflow-y: auto;
+      border: 1px solid #e9ecef;
+      border-radius: 10px;
+      padding: 18px;
+      background-color: #f8f9fa;
+      margin-bottom: 15px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .available-cards h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+      color: #495057;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    /* Responsive fixes for AI arena */
+    @media (max-width: 992px) {
+      .model-selector, .card-set-selector, .card-options-container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px;
+      }
+
+      .model-selector > div, .option-group {
+        min-width: 100%;
+        margin-bottom: 12px;
+      }
+      
+      .card-options-container > div {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #start-sim-btn {
+        width: 100%;
+        margin: 15px 0;
+        font-size: 1rem;
+        padding: 12px 20px;
+      }
+
+      .custom-options {
+        padding: 15px;
+        margin: 12px 0;
+        max-width: 100%; /* Full width on smaller screens */
+      }
+
+      .model-selector, .card-set-selector, .card-options-container {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-set-selector {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .card-set-selector h3 {
+        margin-bottom: 10px;
+      }
+
+      .card-set-selector .radio-container {
+        margin-bottom: 8px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .predefined-options {
+        flex-direction: column;
+      }
+
+      .predefined-options > div {
+        min-width: 100%;
+        margin-bottom: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="/">Player Mode</a></li>
+      <li><a href="/simulate">AI Simulation</a></li>
+      <li><a href="/leaderboard">Leaderboard</a></li>
+    </ul>
+  </nav>
+
+  <div class="arena-container">
+    <div class="arena-header">
+      <h1>GuessArena - AI Simulation</h1>
+    </div>
+
+    <div class="arena-content-wrapper">
+      <!-- Left Column: Controls and Options -->
+      <div class="arena-content-left">
+        <!-- Model Selection: Judge & Testee Models + Max Rounds -->
+        <div class="model-selector">
+          <div>
+            <label for="judge-model-select">Judge Model:</label>
+            <select id="judge-model-select">
+              {% for model in models %}
+                <option value="{{ model }}">{{ model }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div>
+            <label for="testee-model-select">Testee Model:</label>
+            <select id="testee-model-select">
+              {% for model in models %}
+                <option value="{{ model }}">{{ model }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div>
+            <label for="max-rounds-input">Max Rounds:</label>
+            <select id="max-rounds-input">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30" selected>30</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Card Set Type Selection -->
+        <div class="card-set-selector">
+          <h3>Select Card Set Type</h3>
+          <div>
+            <label class="radio-container">
+              <input type="radio" name="card_set_type" value="predefined" checked>
+              <span class="radio-label">Predefined Set</span>
+            </label>
+            <label class="radio-container">
+              <input type="radio" name="card_set_type" value="custom">
+              <span class="radio-label">Custom Set</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Card Set Container -->
+        <div class="card-set-container">
+          <!-- Predefined Card Options -->
+          <div class="card-options-container" id="predefined-container">
+            <h3>Card Options</h3>
+            <div>
+              <div class="option-group">
+                <label for="industry-select">Industry:</label>
+                <select id="industry-select">
+                  {% for ind in industries %}
+                    <option value="{{ ind }}" {% if loop.first %}selected{% endif %}>{{ ind }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="option-group">
+                <label for="chosen-card-select">Chosen Card:</label>
+                <select id="chosen-card-select">
+                  <option value="" selected>(Auto select)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom Card Options -->
+          <div class="custom-options">
+            <label for="custom-deck-input">Enter Custom Card Set:</label>
+            <textarea id="custom-deck-input" rows="3" placeholder="e.g., Ace of Hearts, King of Spades, Queen of Diamonds"></textarea>
+            <p class="help-text">Enter card names separated by commas</p>
+
+            <label for="custom-chosen-card">Specify Chosen Card (Optional):</label>
+            <input type="text" id="custom-chosen-card" placeholder="e.g., King of Spades">
+            <p class="help-text">Leave empty for random selection</p>
+
+            <button id="confirm-custom-cards" class="confirm-button">Confirm Custom Cards</button>
+          </div>
+        </div>
+
+        <div class="controls-container">
+          <button id="start-sim-btn">Start Simulation</button>
+        </div>
+
+        <div class="available-cards">
+          <h3>Available Cards</h3>
+          <ul class="deck-list" id="simulate-deck-list">
+            {% for c in deck %}
+              <li>{{ c }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right Column: Game Rules and Chat -->
+      <div class="arena-content-right">
+        <div class="game-info">
+          <h2>Game Rules</h2>
+          <div class="rules-container">
+            {{ rules|safe }}
+          </div>
+        </div>
+
+        <div class="turns-progress-container">
+          <div class="turns-progress-bar" id="simulate-progress-bar"></div>
+        </div>
+        <div class="turns-text" id="simulate-turns-text">Answers: 0 / 0</div>
+
+        <!-- Auto Dialogue Display Area -->
+        <div class="game-dialogue" id="ai-game-dialogue">
+          <div class="system-message">
+            Welcome to GuessArena AI Simulation! Click "Start Simulation" to auto-run Testee vs Judge.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/ai_arena.js') }}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const cardSetRadios = document.querySelectorAll('input[name="card_set_type"]');
+      const predefinedContainer = document.getElementById('predefined-container');
+      const customOptions = document.querySelector('.custom-options');
+      
+      cardSetRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          if (this.value === 'predefined') {
+            predefinedContainer.style.display = 'flex';
+            customOptions.style.display = 'none';
+          } else {
+            predefinedContainer.style.display = 'none';
+            customOptions.style.display = 'flex';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

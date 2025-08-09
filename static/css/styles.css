@@ -1,0 +1,736 @@
+:root {
+  /* Enhanced color palette with more depth and nuance */
+  --primary-color: #2a4e7f;
+  --primary-light: #3b82c4;
+  --primary-dark: #183153;
+  --secondary-color: #e5edf7;
+  --secondary-dark: #c4d5e9;
+  --accent-color: #4fd1c5;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-light: #64748b;
+  --text-muted: #94a3b8;
+  --background: #f8fafc;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #dc2626;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+  --container-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08);
+  --button-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+
+  /* Typography */
+  --font-xxs: 0.75rem;   /* 12px */
+  --font-xs: 0.85rem;    /* 13.6px - slightly larger for better readability */
+  --font-sm: 0.95rem;    /* ~15px */
+  --font-md: 1rem;       /* 16px */
+  --font-lg: 1.125rem;   /* 18px */
+  --font-xl: 1.25rem;    /* 20px */
+  --font-2xl: 1.5rem;    /* 24px */
+  --font-3xl: 1.875rem;  /* 30px */
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.6;
+  --line-height-loose: 1.8;
+
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-main);
+  background-color: #edf2f7; /* 更有深度的背景色 */
+  color: var(--text-primary);
+  margin: 0;
+  line-height: var(--line-height-normal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: var(--font-md);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improved heading styles */
+h1, h2, h3, h4, h5, h6 {
+  line-height: var(--line-height-tight);
+  margin-top: 0;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+h1 {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--font-xl);
+}
+
+h3 {
+  font-size: var(--font-lg);
+}
+
+/* Improved input and button styles */
+input, select, textarea, button {
+  font-family: var(--font-main);
+}
+
+/* Better link styling */
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Navigation Bar (Fixed at the Top) */
+.navbar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  background-color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-dark);
+  padding: var(--space-md) var(--space-lg);
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--space-lg);
+  z-index: 999;
+  box-shadow: var(--card-shadow);
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.navbar li {
+  display: inline-block;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: var(--font-sm);
+  letter-spacing: 0.01em;
+}
+
+.navbar a:hover {
+  background-color: var(--primary-dark);
+  text-decoration: none;
+}
+
+/* Main Container (Arena Window) */
+.arena-container {
+  margin-top: 65px;
+  width: 85%; /* 从65%增加到85% */
+  height: 88vh; /* 从85vh增加到88vh */
+  background: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px; /* 墛大圆角 */
+  box-shadow: var(--container-shadow), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+}
+
+.arena-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: rgba(255, 255, 255, 0.95);
+  text-align: center;
+  padding: var(--space-lg) var(--space-md); /* 墛大内边距 */
+  font-weight: bold;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 添加背景微纹理，增加质感 */
+.arena-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 20px 20px;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.arena-header h1 {
+  margin: 0;
+  font-size: var(--font-2xl); /* 墛大标题字体 */
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.95);
+  position: relative;
+  z-index: 1;
+}
+
+/* Game Information Section */
+.game-info {
+  padding: var(--space-lg);
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--secondary-dark);
+}
+
+.game-info h2 {
+  margin: 0 0 var(--space-sm);
+  color: var(--primary-dark);
+  font-size: var(--font-lg);
+}
+
+.game-info h3 {
+  margin: 0 0 var(--space-sm);
+  color: var (--primary-dark);
+  font-size: var(--font-md);
+}
+
+.rules-text {
+  background: #ffffff;
+  padding: var(--space-md);
+  border: 1px solid var(--secondary-dark);
+  border-radius: 6px;
+  white-space: pre-wrap;
+  margin-bottom: var(--space-md);
+  font-family: var(--font-main);
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Card List */
+.deck-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: var(--space-sm);
+  padding: 0;
+  margin: 0;
+}
+
+.deck-list li {
+  background: white;
+  border: 1px solid var(--secondary-dark);
+  border-radius: 4px;
+  padding: var(--space-xs) var(--space-md);
+  color: var(--text-secondary);
+  font-size: var(--font-xs);
+  cursor: default;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Model and Option Selectors */
+.model-selector, .card-set-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--secondary-dark);
+}
+
+.model-selector label, .card-set-selector label {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.model-selector select {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-sm);
+  border: 1px solid var(--secondary-dark);
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  min-width: 160px; /* Ensure consistent width */
+}
+
+/* Radio buttons in card selector */
+.card-set-selector input[type="radio"] {
+  margin-right: var(--space-xs);
+}
+
+/* Progress Bar */
+.turns-progress-container {
+  width: 90%;
+  height: 8px;
+  background-color: var(--secondary-color);
+  border-radius: 4px;
+  margin: var(--space-md) auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.turns-progress-bar {
+  height: 100%;
+  background: var(--primary-color);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.turns-text {
+  text-align: center;
+  margin-bottom: var(--space-sm);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+
+/* Chat/Dialogue Area */
+.game-dialogue {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  background-color: var(--background);
+  border-bottom: 1px solid var(--secondary-dark);
+}
+
+/* Message Bubbles */
+.user-message, .bot-message {
+  padding: var(--space-md) var(--space-lg);
+  max-width: 75%;
+  border-radius: 12px; /* 墛大圆角 */
+  font-size: var(--font-md); /* 稍大的字体 */
+  line-height: var(--line-height-normal);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.user-message {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  color: white;
+  font-weight: 500;
+}
+
+.bot-message {
+  align-self: flex-start;
+  background: linear-gradient(to bottom, white, var(--secondary-color));
+  color: var(--text-primary);
+  border-left: 3px solid var(--primary-light);
+}
+
+/* System and Limit Messages */
+.system-message,
+.limit-message {
+  text-align: center;
+  font-size: var(--font-xs);
+  color: var(--text-light);
+  margin: var(--space-sm) auto;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: var(--space-sm);
+  align-self: center;
+  max-width: 80%;
+  font-style: italic;
+}
+
+.limit-message {
+  color: var(--warning);
+  font-weight: 600;
+}
+
+/* Input Area */
+.player-input-area {
+  display: flex;
+  padding: var(--space-lg) var(--space-xl);
+  background: linear-gradient(to bottom, white, #fcfcfd);
+  border-top: 1px solid var(--secondary-dark);
+  align-items: center;
+  gap: var(--space-md);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.player-input-area input {
+  flex-grow: 1;
+  min-width: 200px;
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--font-md);
+  border: 1px solid var(--secondary-dark);
+  border-radius: 8px; /* 墛大圆角 */
+  outline: none;
+  transition: all 0.2s;
+  height: 50px; /* 墛大高度 */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.player-input-area input:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15), inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.player-input-area button,
+#start-sim-btn {
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--font-md);
+  font-weight: 600;
+  border: none;
+  background: linear-gradient(to bottom, var(--primary-light), var(--primary-color));
+  color: white;
+  border-radius: 8px; /* 墛大圆角 */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--button-shadow);
+  height: 50px;
+  min-width: 140px;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.player-input-area button:hover,
+#start-sim-btn:hover {
+  background: linear-gradient(to bottom, var(--primary-light), var(--primary-dark));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom options styling */
+.custom-options {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 500px; /* Reduced from 650px to 500px for more compact appearance */
+  margin: 0 auto var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  box-sizing: border-box;
+}
+
+.custom-options textarea,
+.custom-options input {
+  width: 100%;
+  padding: var(--space-sm);
+  font-size: var(--font-sm);
+  border: 1px solid var(--secondary-dark);
+  border-radius: 4px;
+  resize: vertical;
+  transition: all 0.2s;
+  max-width: 100%;
+  box-sizing: border-box; /* Ensure padding is included in width calc */
+}
+
+.custom-options textarea:focus,
+.custom-options input:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.1);
+  outline: none;
+}
+
+.custom-options label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Leaderboard Styles */
+.ranking-container {
+  margin-top: 80px;
+  width: 75%;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--container-shadow);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.ranking-header h1 {
+  text-align: center;
+  margin: 0 0 var(--space-lg) 0;
+  padding: var(--space-md);
+  background: linear-gradient(to right, var(--primary-color), var(--primary-light));
+  color: rgba(220, 240, 255, 0.95); /* Lighter blue-white color for better readability */
+  border-radius: 6px;
+  font-size: var(--font-xl);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-lg);
+  box-shadow: var(--card-shadow);
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: var(--space-md);
+  text-align: center;
+  border: 1px solid var(--secondary-dark);
+  font-size: var(--font-sm);
+}
+
+.ranking-table th {
+  background-color: var(--secondary-color);
+  font-weight: bold;
+  color: var(--primary-dark);
+}
+
+.ranking-table tbody tr:hover {
+  background-color: var(--background);
+}
+
+/* Simulation specific styles */
+#simulate-turns-text {
+  margin-bottom: var(--space-md);
+}
+
+/* Consistent button group layouts */
+.button-group {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  margin: var(--space-md) 0;
+}
+
+.button-group button {
+  flex: 1;
+  max-width: 200px;
+}
+
+@media (max-width: 1024px) {
+  .arena-container, .ranking-container {
+    width: 90%; /* 从85%减少到90% */
+  }
+
+  .rules-text {
+    font-size: 0.85rem;
+  }
+
+  .arena-header h1 {
+    font-size: var(--font-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .arena-container, .ranking-container {
+    width: 95%;
+    height: 90vh;
+    margin-top: 70px;
+  }
+
+  .model-selector, .card-set-selector {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-sm);
+    gap: var(--space-sm);
+  }
+
+  .model-selector > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+  }
+
+  .model-selector select,
+  .model-selector label {
+    width: 100%;
+  }
+
+  .arena-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .deck-list {
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  .player-input-area {
+    flex-direction: column;
+    padding: var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .player-input-area input,
+  .player-input-area button,
+  #start-sim-btn {
+    width: 100%;
+    margin: 0;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .button-group button {
+    max-width: 100%;
+  }
+
+  .custom-options {
+    padding: var(--space-sm);
+    max-width: 100%; /* Full width on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .navbar ul {
+    gap: var(--space-xs);
+  }
+
+  .navbar a {
+    padding: var(--space-xs) var (--space-sm);
+    font-size: var(--font-xxs);
+  }
+
+  .game-dialogue {
+    padding: var(--space-sm);
+  }
+
+  .user-message, .bot-message {
+    max-width: 90%;
+    padding: var(--space-sm);
+    font-size: var(--font-xs);
+  }
+
+  .custom-options {
+    padding: var (--space-sm);
+  }
+
+  .ranking-table th,
+  .ranking-table td {
+    padding: var(--space-xs);
+    font-size: var(--font-xxs);
+  }
+
+  .arena-header h1 {
+    font-size: var(--font-md);
+  }
+}
+
+/* Fix for zoomed interfaces */
+@media (min-width: 1025px) and (max-height: 800px) {
+  .arena-container {
+    height: 80vh;
+  }
+
+  .game-info {
+    padding: var(--space-md);
+  }
+
+  .game-dialogue {
+    padding: var(--space-md);
+  }
+}
+
+/* Two-Column Layout - Modified for swapped layout */
+.arena-content-wrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.arena-content-left {
+  flex: 3; /* 从2增加到3 */
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-lg); /* 墛大内边距 */
+  overflow-y: auto;
+  background-color: white;
+  border-right: 1px solid var(--secondary-dark);
+}
+
+.arena-content-right {
+  flex: 4; /* 从3增加到4 */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  overflow: hidden;
+}
+
+.arena-content-right .game-info {
+  flex-shrink: 0;
+}
+
+.arena-content-right .game-dialogue {
+  flex-grow: 1;
+  margin: 0 var(--space-md) var(--space-md);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+}
+
+.arena-content-right .player-input-area {
+  margin: 0 var(--space-md) var(--space-md);
+  background: none;
+}
+
+.arena-content-left .available-cards {
+  margin-top: var(--space-lg);
+}
+
+.arena-content-left .model-selector,
+.arena-content-left .card-set-selector {
+  margin-bottom: var(--space-md);
+}
+
+/* Responsive design for mobile */
+@media (max-width: 992px) {
+  .arena-content-wrapper {
+    flex-direction: column;
+  }
+
+  .arena-content-left, .arena-content-right {
+    width: 100%;
+  }
+
+  .arena-content-left {
+    order: -1;
+    border-right: none;
+    border-bottom: 1px solid var(--secondary-dark);
+  }
+
+  .arena-content-right .player-input-area {
+    padding: var(--space-md);
+  }
+
+  .arena-content-right .game-info {
+    padding: var(--space-md);
+  }
+}

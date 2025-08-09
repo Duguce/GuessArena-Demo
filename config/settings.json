@@ -1,0 +1,42 @@
+{
+  "application": {
+    "name": "GuessArena-Demo",
+    "version": "1.0.0",
+    "debug": false
+  },
+  "game": {
+    "max_answers": 30,
+    "default_model": "Qwen2.5-14B-Instruct",
+    "allowed_max_rounds": [5, 10, 20, 30]
+  },
+  "security": {
+    "suspicious_threshold": 10,
+    "suspicious_window_minutes": 30,
+    "rate_limits": {
+      "default": "100 per minute, 1000 per hour, 2000 per day",
+      "play_api": "30 per minute",
+      "ai_simulation_api": "50 per minute",
+      "web_pages": "50 per minute"
+    },
+    "global_limits": {
+      "max_requests": 5000,
+      "window_seconds": 60,
+      "enabled": true
+    },
+    "headers": {
+      "content_security_policy": true,
+      "x_content_type_options": true,
+      "x_frame_options": true,
+      "x_xss_protection": true,
+      "referrer_policy": "strict-origin-when-cross-origin",
+      "permissions_policy": "geolocation=(), microphone=(), camera=()"
+    }
+  },
+  "paths": {
+    "prompts": "prompts",
+    "logs": "data/logs",
+    "leaderboard": "data/leaderboard",
+    "config": "config",
+    "decks": "data/content/decks"
+  }
+}
