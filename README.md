@@ -1,4 +1,4 @@
-<h2 align="center">GuessArena Demo</h1>
+<h2 align="center">GuessArena Demo</h2>
 
 <p align="center">
   <em>A web-based interactive demo for the GuessArena evaluation framework</em>
@@ -46,7 +46,7 @@
 
 4. Configure your API settings in `config/settings.json`
 
-### ▶️ Usage
+### 🌅 Usage
 
 1. Set up your API keys in `config/models.ini` for the AI models you want to use.
 
