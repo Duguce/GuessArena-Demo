@@ -1,29 +1,42 @@
-<h1 align="center">
-    GuessArena-Demo
-</h1>
+<h1 align="center">GuessArena Demo</h1>
 
-> GuessArena Demo is a web application that simulates a card guessing game featuring both player mode and AI simulation capabilities. This application provides a hands-on experience with the methodology presented in our paper "[GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning](https://aclanthology.org/2025.acl-long.534/)".
+<p align="center">
+  <em>A web-based interactive demo for the GuessArena evaluation framework</em>
+</p>
 
+---
 
+> \[!NOTE\]  
+> **GuessArena Demo** is a lightweight web application that simulates a card-guessing game with both **player interaction** and **AI-versus-AI simulation**.  
+> It provides an intuitive, hands-on interface to explore the evaluation methodology introduced in our paper:  
+> <a href="https://aclanthology.org/2025.acl-long.534/">
+> <em>“GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning”</em>
+> </a>.
 
-## Features
+---
 
-- **Player Mode**: Play against an AI judge by asking yes/no questions to guess a chosen card
-- **AI Simulation**: Watch two AI models interact as one tries to guess the card
-- **Leaderboard**: Track performance across different models and industries
-- **Customizable Decks**: Use predefined card sets or create your own custom decks
-- **Industry-specific Scenarios**: Choose cards from different industry domains
+## 🚀 Features
 
-## Requirements
+- **Player Mode** – Interactively play the guessing game by asking yes/no questions to an AI judge  
+- **AI Simulation Mode** – Observe two LLMs engaging in a self-play guessing process  
+- **Leaderboard Tracking** – Compare model performance across different domains and settings  
+- **Customizable Decks** – Use built-in card sets or define your own domain-specific decks  
+- **Domain-Specific Scenarios** – Evaluate reasoning in different industries and knowledge areas  
 
-- Python 3.8+
-- Flask
-- OpenAI API access
+---
 
-## Installation
+## 📦 Requirements
+
+- **Python 3.8+**  
+- **Flask**  
+- **OpenAI API access**  
+
+---
+
+## 🛠 Installation
 
 1. Clone the repository:
-   ```
+   ```bash
    git clone git@github.com:Duguce/GuessArena-Demo.git
    cd GuessArena-Demo
    ```
@@ -41,7 +54,7 @@
 
 4. Configure your API settings in `config/settings.json`
 
-## Usage
+## ▶️ Usage
 
 1. Set up your API keys in `config/models.ini` for the AI models you want to use.
 
@@ -54,7 +67,7 @@
 
 4. Choose between Player Mode or AI Simulation
 
-## Project Structure
+## 📁 Project Structure
 
 - `/config` - Configuration files and model settings
 - `/data` - Leaderboard data, logs, and card decks
@@ -62,7 +75,7 @@
 - `/static` - Static assets (CSS, JavaScript)
 - `/templates` - HTML templates
 
-## Security
+## 🔒 Security
 
 The application includes several security features:
 - Content Security Policy
@@ -70,7 +83,7 @@ The application includes several security features:
 - Path traversal prevention
 - Secure file access
 
-## Citation
+## 📖 Citation
 
 ```
 @inproceedings{
