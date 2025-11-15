@@ -1,10 +1,8 @@
-<h1 align="center">GuessArena Demo</h1>
+<h2 align="center">GuessArena Demo</h1>
 
 <p align="center">
   <em>A web-based interactive demo for the GuessArena evaluation framework</em>
 </p>
-
----
 
 > \[!NOTE\]  
 > **GuessArena Demo** is a lightweight web application that simulates a card-guessing game with both **player interaction** and **AI-versus-AI simulation**.  
@@ -13,9 +11,7 @@
 > <em>“GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning”</em>
 > </a>.
 
----
-
-## 🚀 Features
+### 🚀 Features
 
 - **Player Mode** – Interactively play the guessing game by asking yes/no questions to an AI judge  
 - **AI Simulation Mode** – Observe two LLMs engaging in a self-play guessing process  
@@ -23,17 +19,13 @@
 - **Customizable Decks** – Use built-in card sets or define your own domain-specific decks  
 - **Domain-Specific Scenarios** – Evaluate reasoning in different industries and knowledge areas  
 
----
-
-## 📦 Requirements
+### 📦 Requirements
 
 - **Python 3.8+**  
 - **Flask**  
 - **OpenAI API access**  
 
----
-
-## 🛠 Installation
+### 🛠 Installation
 
 1. Clone the repository:
    ```bash
@@ -54,7 +46,7 @@
 
 4. Configure your API settings in `config/settings.json`
 
-## ▶️ Usage
+### ▶️ Usage
 
 1. Set up your API keys in `config/models.ini` for the AI models you want to use.
 
@@ -75,7 +67,7 @@
 - `/static` - Static assets (CSS, JavaScript)
 - `/templates` - HTML templates
 
-## 🔒 Security
+### 🔒 Security
 
 The application includes several security features:
 - Content Security Policy
@@ -83,7 +75,7 @@ The application includes several security features:
 - Path traversal prevention
 - Secure file access
 
-## 📖 Citation
+### 📖 Citation
 
 ```
 @inproceedings{
